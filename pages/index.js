@@ -1,62 +1,93 @@
 import Head from 'next/head'
+import tokenData from '../utils/tokenData.js'
+import React, { useState, useEffect } from "react";
 
 export default function Home() {
+  const [totalSupply , setTotalSupply ] = useState('');
+  const [totalFees, setTotalFees] = useState('');
+  const [burnpercentage, setBurnpercentage] = useState('');
+
+  useEffect(() => {
+    let repeat;
+    async function fetchData() {
+        try {
+            const res = await tokenData()
+            setTotalSupply(res.totalSupply)
+            setTotalFees(res.totalFees)
+            setBurnpercentage(res.percentageFees)
+            console.log(res)
+
+            repeat = setTimeout(fetchData, 60000); // request again after a minute
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
+    fetchData();
+
+    return () => {
+        if (repeat) {
+            clearTimeout(repeat);
+        }
+    }
+}, []);
+
+
+
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Doge</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://dogemoon.space/">MoonDoge</a>
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          <code>🔥 stats</code>
         </p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="#" className="card">
+            <h3>Total Supply &rarr;</h3>
+            <p>{(typeof totalSupply !== "undefined"  && totalSupply).toLocaleString('en')}</p>
+            
           </a>
 
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          <a href="#" className="card">
+            <br/>
+            <h3>Total burned &rarr;</h3>
+            <p>{(typeof totalFees !== "undefined"  && totalFees).toLocaleString('en')}</p>
           </a>
 
           <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            href="https://bscscan.com/token/0x3a2646fed69112698d3e8a9ab43ae23974e01a26?a=0x000000000000000000000000000000000000dead"
             className="card"
           >
-            <h3>Deploy &rarr;</h3>
+            <h3>Circulating supply &rarr;</h3>
+            <p>{ (totalSupply - totalFees).toLocaleString('en') }</p>
+            <div>➕ burned tokens</div>
+            
+          </a>
+
+          <a
+            href="#"
+            className="card"
+          >
+            <h3>Burned percentage &rarr;</h3>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              {parseFloat(burnpercentage).toFixed(2)} %
             </p>
           </a>
         </div>
       </main>
 
       <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
+          Powered by Moon{' '}
+          {/* <img src="/vercel.svg" alt="Vercel Logo" className="logo" /> */}
       </footer>
 
       <style jsx>{`
@@ -67,6 +98,8 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background-image: linear-gradient(skyblue, #fbe0c4);
+
         }
 
         main {
@@ -130,6 +163,7 @@ export default function Home() {
         }
 
         code {
+          
           background: #fafafa;
           border-radius: 5px;
           padding: 0.75rem;
@@ -202,6 +236,7 @@ export default function Home() {
 
         * {
           box-sizing: border-box;
+
         }
       `}</style>
     </div>

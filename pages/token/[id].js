@@ -1,17 +1,8 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
-
 import { useRouter } from "next/router";
-
-
-import dynamic from 'next/dynamic'
-
-
-
 // Components
 import Links from './components/Links'
-
-
 
 // Local storage 
 const useStateWithLocalStorage = localStorageKey => {
@@ -28,19 +19,39 @@ const useStateWithLocalStorage = localStorageKey => {
 };
 
 const BSC_API = "NEZQNT4IIET4VQJ9JXRD9XUAUJB9HA8RKD"
-const URL_MARKET_CAP = 'https://api.bscscan.com/api?module=stats&action=tokenCsupply&apikey=' + BSC_API
+const URL_MARKET_CAP = 'https://api.bscscan.com/api?module=stats&action=tokenCsupply&apikey=' + BSC_API;
 const URL_BNB_PRICE = "https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT"
 
-export default function Home({ bnbprice1, tokenCap  }) {
+export default function Home() {
   const [tokenContract, setTokenContract] = useState("");
   const [savedTokencontract, setSavedTokenContract] = useStateWithLocalStorage(
     'myValueInLocalStorage'
   );
+  const [bnbPrice, setBnbPrice] = useState();
+  const [tokenCap, setTotenCap] = useState();
+
   const router = useRouter();
-  const handleSubmit = (evt) => {
+
+
+
+
+  // updating parameters after form 
+  const handleSubmit = async (evt) => {
+
     evt.preventDefault();
     setSavedTokenContract(tokenContract)
     router.push(tokenContract)
+
+    const bnbResponse = await fetch(URL_BNB_PRICE);
+    const bnb = await bnbResponse.json();
+    setBnbPrice(bnb.price)
+
+    const urlMcap = URL_MARKET_CAP + `&contractaddress=${tokenContract}`;
+    const tokenResponse = await fetch(urlMcap)
+                                .then(r => r.json())
+                                .catch((error) => { console.log(error)})
+    console.log(tokenResponse)
+    setTotenCap(tokenResponse.result)
 
   };
 
@@ -52,10 +63,15 @@ export default function Home({ bnbprice1, tokenCap  }) {
         <title>Token name </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>BNB price: {bnbprice1.price} USDT <br/>Token MC   {(tokenCap && tokenCap.result/10**8).toLocaleString('en')}</div>
+      Stats for {id} <br/>
+      <hr/>
+      <div>
+        BNB price: {bnbPrice} USDT 
+        <br/>Token MC:   {(typeof tokenCap !== "undefined"  && tokenCap/10**8).toLocaleString('en')}
+      </div>
         {/* <Header/> */}
       <main>
-        Stats for {id} <br/>
+        <hr/>
         <br />
         <form onSubmit={handleSubmit}>
           <label>
@@ -79,15 +95,12 @@ export default function Home({ bnbprice1, tokenCap  }) {
   );
 }
 
-Home.getInitialProps = async (context) => {
-  const { id } = context.query;
+// Home.getInitialProps = async (context) => {
+//   const { id } = context.query;
 
-  const [bnbprice1, tokenCap] = await Promise.all([
-      fetch(URL_BNB_PRICE).then(r => r.json()),
-      fetch(URL_MARKET_CAP + `&contractaddress=${id}`)
-        .then(r => r.json())
-        .catch((error) => { console.log(error)})
-    ]);
-
-    return { bnbprice1, tokenCap };  
-}
+//   const [bnbprice1, tokenCap] = await Promise.all([
+//       fetch(URL_BNB_PRICE).then(r => r.json()),
+//       fetch(URL_MARKET_CAP + `&contractaddress=${id}`)
+//         .then(r => r.json())
+//         .catch((error) => { console.log(error)})
+//     ]);
