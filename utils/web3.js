@@ -1,6 +1,5 @@
 import Web3 from 'web3';
-// require('dotenv').config()
-// require('dotenv').config({path: __dirname + '/.env'})
+
 
 
 
