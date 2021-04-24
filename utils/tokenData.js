@@ -25,9 +25,9 @@ const tokenData = async () =>  {
     const totalSupply = await customToken.methods.totalSupply().call() ;
     const totalSupplyFixed = await customToken.methods.totalSupply().call() / Math.pow(10, decimals);
     const totalFeesFixed = await customToken.methods.totalFees().call() / Math.pow(10, decimals);
-    const percentageFees = totalFeesFixed * 100 / totalSupplyFixed
-
+    
     const balanceOfDeadAddress = await customToken.methods.balanceOf("0x000000000000000000000000000000000000dEaD").call()  / Math.pow(10, decimals) ;
+    const percentageFees = (totalFeesFixed + balanceOfDeadAddress)  * 100 / ( totalSupplyFixed - (totalFeesFixed + balanceOfDeadAddress) )
     // const foreignBalanceBN = new BN(totalSupply)
 
     // console.log(`name`, name)

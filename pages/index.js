@@ -44,7 +44,6 @@ export default function Home() {
 }, []);
 const router = useRouter()
 const { id } = router.query;
-debugger;
 
   return (
     <div className="container">
@@ -71,9 +70,11 @@ debugger;
 
           <a href="#" className="card">
             <br/>
-            <h3>Burn tokens: &rarr;</h3>
+            <h3>Burned tokens: &rarr;</h3>
             <p>{(typeof totalFees !== "undefined"  && totalFees).toLocaleString('en')}</p>
             <p>{  numberToWord(totalFees) }</p>
+            <div> ➖ sent to 0x000dead address </div>
+            <p> {deadTokens}</p>
           </a>
 
           <a
@@ -81,14 +82,13 @@ debugger;
             className="card"
           >
             <h3>Circulating supply &rarr;</h3>
-            <p>{ (totalSupply - (totalFees + deadTokens)).toLocaleString('en') }</p>
+            <p>{ (totalSupply - (totalFees + deadTokens) ).toLocaleString('en') }</p>
 
             {/* <button onClick={toggleTrueFalse}>
                <h3>Wordify</h3>
             </button> */}
-            <p>{  numberToWord(totalSupply - totalFees) }</p>
-            <div> ➖ sent to 0x000dead address </div>
-            <p> {deadTokens}</p>
+            <p>{  numberToWord(totalSupply - (totalFees + deadTokens)) }</p>
+
             
           </a>
 
@@ -98,8 +98,12 @@ debugger;
           >
             <h3>Burned percentage &rarr;</h3>
             <p>
-              {parseFloat(burnpercentage).toFixed(2)} %
+              {/* {parseFloat(burnpercentage).toFixed(2)} % */}
+              {/* {parseFloat(100 - ( (totalSupply - (totalFees + deadTokens)) / totalSupply * 100) ) .toFixed(2)} % */}
+              {parseFloat((totalFees + deadTokens) / totalSupply * 100 ) .toFixed(2)} %
+
             </p>
+            
           </a>
         </div>
       </main>
