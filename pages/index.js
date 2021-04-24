@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import tokenData from '../utils/tokenData.js'
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [totalSupply , setTotalSupply ] = useState('');
@@ -22,17 +23,16 @@ export default function Home() {
             console.error(error.message)
         }
     }
-
     fetchData();
-
     return () => {
         if (repeat) {
             clearTimeout(repeat);
         }
     }
 }, []);
-
-
+const router = useRouter()
+const { id } = router.query;
+debugger;
 
   return (
     <div className="container">
@@ -40,7 +40,6 @@ export default function Home() {
         <title>Doge</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <h1 className="title">
           Welcome to <a href="https://dogemoon.space/">MoonDoge</a>
@@ -69,7 +68,7 @@ export default function Home() {
           >
             <h3>Circulating supply &rarr;</h3>
             <p>{ (totalSupply - totalFees).toLocaleString('en') }</p>
-            <div>➕ burned tokens</div>
+            <div>➖ burned tokens</div>
             
           </a>
 
