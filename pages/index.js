@@ -2,11 +2,22 @@ import Head from 'next/head'
 import tokenData from '../utils/tokenData.js'
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+const numberToText = require('number-to-text')
+require('number-to-text/converters/en-us'); // load converter
+
 
 export default function Home() {
   const [totalSupply , setTotalSupply ] = useState('');
   const [totalFees, setTotalFees] = useState('');
   const [burnpercentage, setBurnpercentage] = useState('');
+  const [deadTokens, setDeadTokens] = useState('');
+  
+  const [wordsTotalSupplyToggle, setWordsTotalSupplyToggle] = useState(0);
+  const toggleTrueFalse = () => setWordsTotalSupplyToggle(!wordsTotalSupplyToggle);
+
+  const numberToWord = (number) => {
+    return numberToText.convertToText(Math.trunc(number)).split(",")[0]
+  }
 
   useEffect(() => {
     let repeat;
@@ -16,6 +27,7 @@ export default function Home() {
             setTotalSupply(res.totalSupply)
             setTotalFees(res.totalFees)
             setBurnpercentage(res.percentageFees)
+            setDeadTokens(res.balanceOfDeadAddress)
             console.log(res)
 
             repeat = setTimeout(fetchData, 60000); // request again after a minute
@@ -53,22 +65,30 @@ debugger;
           <a href="#" className="card">
             <h3>Total Supply &rarr;</h3>
             <p>{(typeof totalSupply !== "undefined"  && totalSupply).toLocaleString('en')}</p>
+            <p>{  numberToWord(totalSupply) }</p>
             
           </a>
 
           <a href="#" className="card">
             <br/>
-            <h3>Total burned &rarr;</h3>
+            <h3>Burn tokens: &rarr;</h3>
             <p>{(typeof totalFees !== "undefined"  && totalFees).toLocaleString('en')}</p>
+            <p>{  numberToWord(totalFees) }</p>
           </a>
 
           <a
-            href="https://bscscan.com/token/0x3a2646fed69112698d3e8a9ab43ae23974e01a26?a=0x000000000000000000000000000000000000dead"
+            // href="https://bscscan.com/token/0x3a2646fed69112698d3e8a9ab43ae23974e01a26?a=0x000000000000000000000000000000000000dead"
             className="card"
           >
             <h3>Circulating supply &rarr;</h3>
-            <p>{ (totalSupply - totalFees).toLocaleString('en') }</p>
-            <div>➖ burned tokens</div>
+            <p>{ (totalSupply - (totalFees + deadTokens)).toLocaleString('en') }</p>
+
+            {/* <button onClick={toggleTrueFalse}>
+               <h3>Wordify</h3>
+            </button> */}
+            <p>{  numberToWord(totalSupply - totalFees) }</p>
+            <div> ➖ sent to 0x000dead address </div>
+            <p> {deadTokens}</p>
             
           </a>
 
