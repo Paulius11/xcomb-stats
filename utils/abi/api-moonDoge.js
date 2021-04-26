@@ -1,4 +1,4 @@
-const ERC20ABI = [
+[
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
@@ -412,5 +412,3 @@ const ERC20ABI = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
-
-export default ERC20ABI;

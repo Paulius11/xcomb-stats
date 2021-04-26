@@ -95,12 +95,3 @@ export default function Home() {
   );
 }
 
-// Home.getInitialProps = async (context) => {
-//   const { id } = context.query;
-
-//   const [bnbprice1, tokenCap] = await Promise.all([
-//       fetch(URL_BNB_PRICE).then(r => r.json()),
-//       fetch(URL_MARKET_CAP + `&contractaddress=${id}`)
-//         .then(r => r.json())
-//         .catch((error) => { console.log(error)})
-//     ]);

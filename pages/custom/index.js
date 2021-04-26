@@ -1,7 +1,17 @@
 import Head from 'next/head'
-import tokenData from '../utils/tokenData.js'
+import tokenData from '../../utils/tokenData.js'
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Links from './components/Links'
+
+import 'antd/dist/antd.css';
+import { Input, Space } from 'antd';
+import { AudioOutlined } from '@ant-design/icons';
+
+import { Progress } from 'antd';
+
+
+
 const numberToText = require('number-to-text')
 require('number-to-text/converters/en-us'); // load converter
 
@@ -12,8 +22,10 @@ export default function Home() {
   const [burnpercentage, setBurnpercentage] = useState('');
   const [deadTokens, setDeadTokens] = useState('');
   const [tokenName, setTokenName] = useState('');
+  const [data, setData] = useState('');
 
-  const [tokenContract, setTokenContract] = useState("");
+
+  const [tokenContract, setTokenContract] = useState("0x3a2646fed69112698d3e8a9ab43ae23974e01a26");
   
   const [wordsTotalSupplyToggle, setWordsTotalSupplyToggle] = useState(0);
   const toggleTrueFalse = () => setWordsTotalSupplyToggle(!wordsTotalSupplyToggle);
@@ -22,14 +34,23 @@ export default function Home() {
     return numberToText.convertToText(Math.trunc(number)).split(",")[0]
   }
 
+  // const handleSubmit = (evt) => {
+  //   evt.preventDefault();
+  //   console.log(tokenContract)
+   
+  // }
+
+
   useEffect(() => {
     let repeat;
     async function fetchData() {
         try {
-            const res = await tokenData()
+            // debugger;
+            console.log(`tokenContract in index`, tokenContract)
+            const res = await tokenData(tokenContract)
+            setData(res)
             setTotalSupply(res.totalSupply)
             setTotalFees(res.totalFees)
-            setBurnpercentage(res.percentageFees)
             setDeadTokens(res.balanceOfDeadAddress)
             setTokenName(res.name)
             console.log(res)
@@ -45,9 +66,14 @@ export default function Home() {
             clearTimeout(repeat);
         }
     }
-}, []);
+}, [tokenContract]);
+
 const router = useRouter()
 const { id } = router.query;
+
+const { Search } = Input;
+const onSearch = value => console.log(value);
+
 
   return (
     <div className="container">
@@ -57,14 +83,16 @@ const { id } = router.query;
       </Head>
       <main>
         <h1 className="title">
-          Welcome to <a href="https://dogemoon.space/">{tokenName}</a>
+          Welcome to 
+         <a href={`https://bscscan.com/token/${tokenContract}`} > {tokenName} </a>
         </h1>
+        <hr/>
 
         <p className="description">
-          <code>🔥 stats</code>
+          <code>
+            {data.symbol} 🔥 stats</code>
         </p>
-
-
+        <Search placeholder="input contract address"  suffix="BSC"  style={{ width: 560 }} onChange={(e) => setTokenContract(e.target.value)}  />
         <div className="grid">
           <a href="#" className="card">
             <h3>Total Supply &rarr;</h3>
@@ -73,18 +101,27 @@ const { id } = router.query;
             
           </a>
 
-          <a href="#" className="card">
+          <a 
+            href={`https://bscscan.com/token/${tokenContract}?a=0x000000000000000000000000000000000000dead`} 
+            className="card"
+            >
             <br/>
             <h3>Burned tokens: &rarr;</h3>
-            <p>{(typeof totalFees !== "undefined"  && totalFees).toLocaleString('en')}</p>
-            <p>{  numberToWord(totalFees) }</p>
+            <p>{(typeof totalFees !== "undefined"  && totalFees).toLocaleString('en')} <br/>
+            {  numberToWord(totalFees) }
+             </p>
+
+
+
+
             <hr/>
-            <div> ➖ sent to 0x000dead address </div>
-            <p> {deadTokens}</p>
+            <div> ➖ 0x000dead address: {deadTokens.toLocaleString('en')}  </div>
+            <Progress percent={ (deadTokens  / totalSupply * 100).toFixed(2)}  />
+
           </a>
 
           <a
-            // href="https://bscscan.com/token/0x3a2646fed69112698d3e8a9ab43ae23974e01a26?a=0x000000000000000000000000000000000000dead"
+            href='#'
             className="card"
           >
             <h3>Circulating supply &rarr;</h3>
@@ -104,19 +141,20 @@ const { id } = router.query;
           >
             <h3>Burned percentage &rarr;</h3>
             <p>
-              {/* {parseFloat(burnpercentage).toFixed(2)} % */}
-              {/* {parseFloat(100 - ( (totalSupply - (totalFees + deadTokens)) / totalSupply * 100) ) .toFixed(2)} % */}
-              {parseFloat((totalFees + deadTokens) / totalSupply * 100 ) .toFixed(2)} %
-
+              Total burned: {parseFloat((totalFees + deadTokens) / totalSupply * 100 ) .toFixed(2)} % <br/>
+              <Progress percent={parseFloat((totalFees + deadTokens) / totalSupply * 100 ) .toFixed(2)} status="active" />
             </p>
-            
+              <hr/>
+              {data.taxFee && `Tax: ${data.taxFee} %  `} <br/>
+              {data.liqFee && `Liquidity : ${data.liqFee} %  `}
           </a>
         </div>
+        <Links address={tokenContract}/>
       </main>
 
       <footer>
+     
           Powered by Moon{' '}
-          {/* <img src="/vercel.svg" alt="Vercel Logo" className="logo" /> */}
       </footer>
 
       <style jsx>{`
