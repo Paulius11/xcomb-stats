@@ -3,11 +3,10 @@ import tokenData from '../../utils/tokenData.js'
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Links from './components/Links'
+import getBnbPrice from '../../utils/bnbPrice'
 
 import 'antd/dist/antd.css';
 import { Input, Space } from 'antd';
-import { AudioOutlined } from '@ant-design/icons';
-
 import { Progress } from 'antd';
 
 
@@ -19,26 +18,19 @@ require('number-to-text/converters/en-us'); // load converter
 export default function Home() {
   const [totalSupply , setTotalSupply ] = useState('');
   const [totalFees, setTotalFees] = useState('');
-  const [burnpercentage, setBurnpercentage] = useState('');
   const [deadTokens, setDeadTokens] = useState('');
   const [tokenName, setTokenName] = useState('');
   const [data, setData] = useState('');
+  
+  const [bnbPrice, setBnbPrice] = useState();
 
 
   const [tokenContract, setTokenContract] = useState("0x3a2646fed69112698d3e8a9ab43ae23974e01a26");
   
-  const [wordsTotalSupplyToggle, setWordsTotalSupplyToggle] = useState(0);
-  const toggleTrueFalse = () => setWordsTotalSupplyToggle(!wordsTotalSupplyToggle);
 
   const numberToWord = (number) => {
     return numberToText.convertToText(Math.trunc(number)).split(",")[0]
   }
-
-  // const handleSubmit = (evt) => {
-  //   evt.preventDefault();
-  //   console.log(tokenContract)
-   
-  // }
 
 
   useEffect(() => {
@@ -53,7 +45,9 @@ export default function Home() {
             setTotalFees(res.totalFees)
             setDeadTokens(res.balanceOfDeadAddress)
             setTokenName(res.name)
+            const BSC = await getBnbPrice()
             console.log(res)
+            setBnbPrice(BSC)
 
             repeat = setTimeout(fetchData, 60000); // request again after a minute
         } catch (error) {
@@ -92,7 +86,7 @@ const onSearch = value => console.log(value);
           <code>
             {data.symbol} 🔥 stats</code>
         </p>
-        <Search placeholder="input contract address"  suffix="BSC"  style={{ width: 560 }} onChange={(e) => setTokenContract(e.target.value)}  />
+        <Search placeholder="input contract address"  suffix={`BNB ${bnbPrice} $`}   style={{ width: 560 }} onChange={(e) => setTokenContract(e.target.value)}  />
         <div className="grid">
           <a href="#" className="card">
             <h3>Total Supply &rarr;</h3>
