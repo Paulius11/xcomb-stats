@@ -25,7 +25,10 @@ export default function Links({ address }) {
         </li>
         <li>
           {" "}
-          <a href={`https://charts.bogged.finance/?token=${address}`}>Bogged chart{" "}</a>
+          <a href={`https://charts.bogged.finance/?token=${address}`}>
+            {" "}
+            Bogged chart{" "}
+          </a>{" "}
         </li>
       </ul>
 
