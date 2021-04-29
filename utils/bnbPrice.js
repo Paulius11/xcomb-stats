@@ -8,6 +8,6 @@ const bnbPrice = async() => {
     const bnb = await bnbResponse.json();
     console.log(bnb.price)
 
-    return parseFloat(bnb.price).toFixed(0) 
+    return parseFloat(bnb.price).toFixed(2) 
 }
 export default bnbPrice;
