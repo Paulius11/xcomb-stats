@@ -89,10 +89,9 @@ export default function Home() {
             >
              v2
             </a>
-
-
             </Menu.Item>
           </Menu.ItemGroup>
+
           <Menu.ItemGroup title="Others">
             <Menu.Item key="setting:3">
             <a target="_blank"
@@ -106,6 +105,11 @@ export default function Home() {
             <a target="_blank" href={`https://app.1inch.io/#/56/swap/BNB/${tokenContract}`}>1inch</a>
             </Menu.Item>
           </Menu.ItemGroup>
+        </SubMenu>
+        <SubMenu key="Tools" icon={<SettingOutlined />} title="Tools">
+        <Menu.Item key="1"> <a target="_blank" href={`https://vfat.tools`}> Yield farming Info</a></Menu.Item>
+          <Menu.Item key="2"> <a target="_blank" href={`https://dailydefi.org/tools/impermanent-loss-calculator/`}> Impermanent Loss Calculator</a></Menu.Item>
+          <Menu.Item key="3"><a target="_blank" href={`https://tokensniffer.com/token/${tokenContract}`}>Token sniffer</a></Menu.Item>
         </SubMenu>
         </Menu>
       </Header>
