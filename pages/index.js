@@ -11,7 +11,7 @@ import { Progress } from "antd";
 import { Layout, Menu, Breadcrumb } from "antd";
 const { Header, Content, Footer } = Layout;
 
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { ToolOutlined,  AppstoreOutlined, AreaChartOutlined } from '@ant-design/icons';
 
 
 const numberToText = require("number-to-text");
@@ -74,7 +74,7 @@ export default function Home() {
           <Menu.Item key="1"> <a target="_blank" href={`https://dex.guru/token/${tokenContract}`}> Dex Guru</a></Menu.Item>
           <Menu.Item key="2"> <a target="_blank" href={`https://poocoin.app/tokens/${tokenContract}`}> Poop coin</a></Menu.Item>
           <Menu.Item key="3"><a target="_blank" href={`https://charts.bogged.finance/?token=${tokenContract}`}>Bogged chart</a></Menu.Item>
-          <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Exchanges">
+          <SubMenu key="SubMenu" icon={<AreaChartOutlined />} title="Exchanges">
           <Menu.ItemGroup title="Pancakeswap">
             <Menu.Item key="setting:1">
             <a  target="_blank"
@@ -106,7 +106,7 @@ export default function Home() {
             </Menu.Item>
           </Menu.ItemGroup>
         </SubMenu>
-        <SubMenu key="Tools" icon={<SettingOutlined />} title="Tools">
+        <SubMenu key="Tools" icon={<ToolOutlined />} title="Tools">
         <Menu.Item key="1"> <a target="_blank" href={`https://vfat.tools`}> Yield farming Info</a></Menu.Item>
           <Menu.Item key="2"> <a target="_blank" href={`https://dailydefi.org/tools/impermanent-loss-calculator/`}> Impermanent Loss Calculator</a></Menu.Item>
           <Menu.Item key="3"><a target="_blank" href={`https://tokensniffer.com/token/${tokenContract}`}>Token sniffer</a></Menu.Item>
@@ -121,7 +121,7 @@ export default function Home() {
         <main>
           <h1 className="title">
             Welcome to
-            <a href={`https://bscscan.com/token/${tokenContract}`}>
+            <a target="_blank" href={`https://bscscan.com/token/${tokenContract}`}>
               {" "}
               {tokenName}{" "}
             </a>
