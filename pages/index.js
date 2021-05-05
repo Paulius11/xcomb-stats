@@ -26,7 +26,8 @@ export default function Home() {
   const [data, setData] = useState("");
   const [tokenPrice, setTokenPrice] = useState();
 
-  const [bnbPrice, setBnbPrice] = useState();
+  const [bnbPrice, setBnbPrice] = useState('');
+  const [seachHistory, setSearchHistory] = useState([{name: '', url: ''}]);
 
   const [tokenContract, setTokenContract] = useState(
     "0x3a2646fed69112698d3e8a9ab43ae23974e01a26"
@@ -41,6 +42,7 @@ export default function Home() {
    */
   const fetchData = async () => {
     try {
+      console.log(`tokenContract`, tokenContract)
       const res = await tokenData(tokenContract);
       console.log(`res`, res)
       setData(res);
@@ -77,7 +79,7 @@ export default function Home() {
     }
   };
 
-  // when seach button is clicked
+  // when search button is clicked
   const onSearch = () => {
     fetchData();
   };
@@ -161,12 +163,15 @@ export default function Home() {
             placeholder="input contract address"
             suffix={`BNB ${bnbPrice} $`}
             style={{ width: 560 }}
-            onChange={(e) => {
-              console.log(`e.value`, e.target.value)
+            onChange={ (e) => {
               setTokenContract(e.target.value)
-              if(e.target.value.length == 42) {
-                onSearch();
-              }
+              // e.preventDefault()
+              // console.log(`e.target.value.length`, e.target.value.length)
+              // console.log(`tokenContract`, tokenContract)
+              // if(e.target.value.length == 42) {
+              //   setTokenContract(e.target.value)
+              //   console.log(`tokenContract`, tokenContract)
+              //   fetchData();
             }}
             onSearch={onSearch}
           />
@@ -235,6 +240,10 @@ export default function Home() {
           </div>
          
         </main>
+        <history>
+          History<br/>
+
+        </history>
 
         <footer>Powered by Moon </footer>
 
