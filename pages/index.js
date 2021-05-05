@@ -215,14 +215,9 @@ export default function Home() {
               <h3>Burned percentage &rarr;</h3>
               <p>
                 Total burned:{" "}
-                {parseFloat(
-                  ((totalFees + deadTokens) / totalSupply) * 100
-                ).toFixed(2)}{" "}
-                % <br />
+                {data.burnedTotal} % <br />
                 <Progress
-                  percent={parseFloat(
-                    ((totalFees + deadTokens) / totalSupply) * 100
-                  ).toFixed(2)}
+                  percent={data.burnedTotal} 
                   status="active"
                 />
               </p>

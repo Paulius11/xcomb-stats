@@ -65,18 +65,7 @@ const tokenData = async (token = "") => {
       console.log(error)
   }
 
-  // const foreignBalanceBN = new BN(totalSupply)
-
-  // console.log(`name`, name)
-  // console.log(`symbol`, symbol)
-  // console.log(`decimals`, decimals)
-  // console.log(`totalSupply`, totalSupply)
-  // console.log(`foreignBalanceBN`, foreignBalanceBN)
-  // console.log(`totalSupplyFixed`, totalSupplyFixed)
-  // console.log(`totalFeesFixed`, totalFeesFixed)
-  // console.log(`percentageFees`, percentageFees)
-
-  // console.log(deadAddressTokens)
+  const burnedTotal = parseFloat(( (totalFeesFixed + balanceOfDeadAddress) / totalSupplyFixed ) * 100).toFixed(2)
 
   return {
     name: name,
@@ -86,7 +75,8 @@ const tokenData = async (token = "") => {
     totalFees: totalFeesFixed,
     balanceOfDeadAddress: balanceOfDeadAddress,
     taxFee: getTaxFee,
-    liqFee: liquidityFee
+    liqFee: liquidityFee,
+    burnedTotal: burnedTotal,
   };
 };
 // const data = await tokenData();
