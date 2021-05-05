@@ -161,7 +161,13 @@ export default function Home() {
             placeholder="input contract address"
             suffix={`BNB ${bnbPrice} $`}
             style={{ width: 560 }}
-            onChange={(e) => setTokenContract(e.target.value)}
+            onChange={(e) => {
+              console.log(`e.value`, e.target.value)
+              setTokenContract(e.target.value)
+              if(e.target.value.length == 42) {
+                onSearch();
+              }
+            }}
             onSearch={onSearch}
           />
           <div className="grid">
