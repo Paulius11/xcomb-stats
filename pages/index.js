@@ -98,7 +98,7 @@ export default function Home() {
     <Layout className="layout">
       <div className="container">
         <Head>
-          <title>Burn Sats</title>
+          <title>Burn Stats</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
