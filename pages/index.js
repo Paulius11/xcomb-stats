@@ -2,7 +2,6 @@ import Head from "next/head";
 import tokenData from "../utils/tokenData.js";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import getBnbPrice from "../utils/bnbPrice";
 import getReserveData from "../utils/tokenPrice";
 
 import "antd/dist/antd.css";
@@ -55,26 +54,6 @@ export default function Home() {
       setTotalFees(res.totalFees);
       setDeadTokens(res.balanceOfDeadAddress);
       setTokenName(res.name);
-      const BSC = await getBnbPrice();
-      setBnbPrice(BSC);
-
-      const { _reserve0, _reserve1 } = await getReserveData(tokenContract);
-      console.log(`Reserve`, _reserve0, _reserve1);
-      console.log("decimals", res.decimals);
-
-      if (res.name == "DogeMoon") {
-        const decimals = 10 ** res.decimals;
-        console.log("decimals", decimals);
-        var tokenPriceCacl = Number(_reserve1 / _reserve0 / decimals).toFixed(
-          18
-        ); // specifically for doogemon
-        setTokenPrice(tokenPriceCacl);
-        console.log(`price`, tokenPriceCacl);
-      }
-      // } else {
-      // decimals 18 other tokens
-      //   var tokenPriceCacl =  _reserve1 / _reserve0
-      // }
     } catch (error) {
       console.error(error.message);
     }
