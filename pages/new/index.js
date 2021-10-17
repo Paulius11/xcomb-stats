@@ -23,29 +23,9 @@ export default function Home() {
   const [bnbPrice, setBnbPrice] = useState();
 
   const [tokenContract, setTokenContract] = useState(
-    "0x3a2646fed69112698d3e8a9ab43ae23974e01a26"
+    "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
   );
 
-  const charlList = [
-    {
-      title: "https://dex.guru/token/${address}",
-    },
-    {
-      title: "Title 2",
-    },
-    {
-      title: "Title 3",
-    },
-    {
-      title: "Title 4",
-    },
-    {
-      title: "Title 5",
-    },
-    {
-      title: "Title 6",
-    },
-  ];
 
   const numberToWord = (number) => {
     return numberToText.convertToText(Math.trunc(number)).split(",")[0];

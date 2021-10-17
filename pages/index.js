@@ -10,10 +10,14 @@ import { Input, Space } from "antd";
 import { Progress } from "antd";
 
 import { Layout, Menu, Breadcrumb } from "antd";
+import { Card, Col, Row } from "antd";
 const { Header, Content, Footer } = Layout;
 
-import { ToolOutlined,  AppstoreOutlined, AreaChartOutlined } from '@ant-design/icons';
-
+import {
+  ToolOutlined,
+  AppstoreOutlined,
+  AreaChartOutlined,
+} from "@ant-design/icons";
 
 const numberToText = require("number-to-text");
 require("number-to-text/converters/en-us"); // load converter
@@ -26,11 +30,12 @@ export default function Home() {
   const [data, setData] = useState("");
   const [tokenPrice, setTokenPrice] = useState();
 
-  const [bnbPrice, setBnbPrice] = useState('');
-  const [seachHistory, setSearchHistory] = useState([{name: '', url: ''}]);
+  const [bnbPrice, setBnbPrice] = useState("");
+  const [seachHistory, setSearchHistory] = useState([{ name: "", url: "" }]);
 
+  // set initial coin to be displayed
   const [tokenContract, setTokenContract] = useState(
-    "0x3a2646fed69112698d3e8a9ab43ae23974e01a26"
+    "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
   );
 
   const numberToWord = (number) => {
@@ -42,9 +47,9 @@ export default function Home() {
    */
   const fetchData = async () => {
     try {
-      console.log(`tokenContract`, tokenContract)
+      console.log(`tokenContract`, tokenContract);
       const res = await tokenData(tokenContract);
-      console.log(`res`, res)
+      console.log(`res`, res);
       setData(res);
       setTotalSupply(res.totalSupply);
       setTotalFees(res.totalFees);
@@ -53,27 +58,23 @@ export default function Home() {
       const BSC = await getBnbPrice();
       setBnbPrice(BSC);
 
-      const {_reserve0, _reserve1} = await getReserveData(tokenContract);
-      console.log(`Reserve`, _reserve0, _reserve1)
-      console.log("decimals", res.decimals)
+      const { _reserve0, _reserve1 } = await getReserveData(tokenContract);
+      console.log(`Reserve`, _reserve0, _reserve1);
+      console.log("decimals", res.decimals);
 
-
-      if(res.name == "DogeMoon") {
-        const decimals = 10 ** res.decimals
-        console.log("decimals", decimals )
-        var tokenPriceCacl = Number( (_reserve1  / _reserve0)/decimals).toFixed(18) ; // specifically for doogemon
-        setTokenPrice(tokenPriceCacl)
-        console.log(`price`, (tokenPriceCacl) )
+      if (res.name == "DogeMoon") {
+        const decimals = 10 ** res.decimals;
+        console.log("decimals", decimals);
+        var tokenPriceCacl = Number(_reserve1 / _reserve0 / decimals).toFixed(
+          18
+        ); // specifically for doogemon
+        setTokenPrice(tokenPriceCacl);
+        console.log(`price`, tokenPriceCacl);
       }
       // } else {
-      //   // decimals 18 other tokens
-      //   var tokenPriceCacl =  _reserve1 / _reserve0 
+      // decimals 18 other tokens
+      //   var tokenPriceCacl =  _reserve1 / _reserve0
       // }
-
-      
-      
-      
-
     } catch (error) {
       console.error(error.message);
     }
@@ -95,60 +96,18 @@ export default function Home() {
 
   return (
     <Layout className="layout">
-      <Header>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["0"]}>
-          <Menu.Item key="1"> <a target="_blank" href={`https://dex.guru/token/${tokenContract}`}> Dex Guru</a></Menu.Item>
-          <Menu.Item key="2"> <a target="_blank" href={`https://poocoin.app/tokens/${tokenContract}`}> Poop coin</a></Menu.Item>
-          <Menu.Item key="3"><a target="_blank" href={`https://charts.bogged.finance/?token=${tokenContract}`}>Bogged chart</a></Menu.Item>
-          <SubMenu key="SubMenu" icon={<AreaChartOutlined />} title="Exchanges">
-          <Menu.ItemGroup title="Pancakeswap">
-            <Menu.Item key="setting:1">
-            <a  target="_blank"
-                href={`https://exchange.pancakeswap.finance/#/swap?0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&outputCurrency=${tokenContract}`}
-            >
-             v1
-            </a>
-            </Menu.Item>
-            <Menu.Item key="setting:2">
-            <a  target="_blank"
-                href={`https://v1exchange.pancakeswap.finance/#/swap?0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&outputCurrency=${tokenContract}`}
-            >
-             v2
-            </a>
-            </Menu.Item>
-          </Menu.ItemGroup>
-
-          <Menu.ItemGroup title="Others">
-            <Menu.Item key="setting:3">
-            <a target="_blank"
-            href={`https://pandaswap.xyz/#/swap?0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&outputCurrency=${tokenContract}`}
-            >
-              Pandaswap
-             </a>
-            </Menu.Item>
-
-            <Menu.Item key="setting:4">
-            <a target="_blank" href={`https://app.1inch.io/#/56/swap/BNB/${tokenContract}`}>1inch</a>
-            </Menu.Item>
-          </Menu.ItemGroup>
-        </SubMenu>
-        <SubMenu key="Tools" icon={<ToolOutlined />} title="Tools">
-        <Menu.Item key="1"> <a target="_blank" href={`https://vfat.tools`}> Yield farming Info</a></Menu.Item>
-          <Menu.Item key="2"> <a target="_blank" href={`https://dailydefi.org/tools/impermanent-loss-calculator/`}> Impermanent Loss Calculator</a></Menu.Item>
-          <Menu.Item key="3"><a target="_blank" href={`https://tokensniffer.com/token/${tokenContract}`}>Token sniffer</a></Menu.Item>
-        </SubMenu>
-        </Menu>
-      </Header>
       <div className="container">
         <Head>
-          <title>Doge</title>
+          <title>Burn Sats</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
           <h1 className="title">
             Welcome to
-            <a target="_blank" href={`https://bscscan.com/token/${tokenContract}`}>
+            <a
+              target="_blank"
+              href={`https://blockscout.com/xdai/mainnet/token/${tokenContract}`}
+            >
               {" "}
               {tokenName}{" "}
             </a>
@@ -156,15 +115,21 @@ export default function Home() {
           <hr />
 
           <p className="description">
-            <code>{data.symbol} 🔥 stats</code><br/>
-             {tokenName == "DogeMoon" ? <code>Price ${Number(tokenPrice*bnbPrice).toFixed(20)} $</code> : ''} 
+            <code>{data.symbol} 🔥 stats</code>
+
+            <br />
+            {tokenName == "DogeMoon" ? (
+              <code>Price ${Number(tokenPrice * bnbPrice).toFixed(20)} $</code>
+            ) : (
+              ""
+            )}
           </p>
-          <Search
+          {/* <Search
             placeholder="input contract address"
             suffix={`BNB ${bnbPrice} $`}
             style={{ width: 560 }}
-            onChange={ (e) => {
-              setTokenContract(e.target.value)
+            onChange={(e) => {
+              setTokenContract(e.target.value);
               // e.preventDefault()
               // console.log(`e.target.value.length`, e.target.value.length)
               // console.log(`tokenContract`, tokenContract)
@@ -174,76 +139,30 @@ export default function Home() {
               //   fetchData();
             }}
             onSearch={onSearch}
-          />
-          <div className="grid">
-            <a href="#" className="card">
-              <h3>Total Supply &rarr;</h3>
-              <p>
-                {(
-                  typeof totalSupply !== "undefined" && totalSupply
-                ).toLocaleString("en")}
-              </p>
-              <p>{numberToWord(totalSupply)}</p>
-            </a>
-
-            <a
-              href={`https://bscscan.com/token/${tokenContract}?a=0x000000000000000000000000000000000000dead`}
-              className="card"
-            >
-              <br />
-              <h3>Burned tokens: &rarr;</h3>
-              <p>
-                {(typeof totalFees !== "undefined" && totalFees).toLocaleString(
-                  "en"
-                )}{" "}
-                <br />
-                {numberToWord(totalFees)}
-              </p>
-
-              <hr />
-              <div>
-                {" "}
-                ➖ 0x000dead address: {deadTokens.toLocaleString("en")}{" "}
-              </div>
-              <Progress
-                percent={((deadTokens / totalSupply) * 100).toFixed(2)}
-              />
-            </a>
-
-            <a href="#" className="card">
-              <h3>Circulating supply &rarr;</h3>
-              <p>
-                {(totalSupply - (totalFees + deadTokens)).toLocaleString("en")}
-              </p>
-
-              {/* <button onClick={toggleTrueFalse}>
-               <h3>Wordify</h3>
-            </button> */}
-              <p>{numberToWord(totalSupply - (totalFees + deadTokens))}</p>
-            </a>
-
-            <a href="#" className="card">
-              <h3>Burned percentage &rarr;</h3>
-              <p>
-                Total burned:{" "}
-                {data.burnedTotal} % <br />
-                <Progress
-                  percent={data.burnedTotal} 
-                  status="active"
-                />
-              </p>
-              <hr />
-              {data.taxFee && `Tax: ${data.taxFee} %  `} <br />
-              {data.liqFee && `Liquidity : ${data.liqFee} %  `}
-            </a>
-
+          /> */}
+          <div className="site-card-wrapper">
+            <Row gutter={16}>
+              <Col>
+                <Card title="Total Supply" bordered={false}>
+                  {(
+                    typeof totalSupply !== "undefined" && totalSupply
+                  ).toLocaleString("en")}
+                </Card>
+              </Col>
+              <Col>
+                <Card title="Burned: " bordered={false}>
+                  
+                  <a
+                    href={`https://blockscout.com/xdai/mainnet/address/0x000000000000000000000000000000000000dEaD/tokens/0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7/token-transfers`}
+                  >
+                    {deadTokens.toLocaleString("en")}
+                  </a>
+                </Card>
+              </Col>
+            </Row>
+            <Progress percent={((deadTokens / totalSupply) * 100).toFixed(2)} />
           </div>
-         
         </main>
-        <history>
-          History<br/>
-
-        </history>
 
         <footer>Powered by Moon </footer>
 
