@@ -77,7 +77,7 @@ export default function Home() {
     <Layout className="layout">
       <div className="container">
         <Head>
-          <title>Burn Stats</title>
+          <title>Comb Burn Stats</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
