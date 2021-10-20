@@ -2,7 +2,7 @@ import Head from "next/head";
 import tokenData from "../utils/tokenData.js";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import getReserveData from "../utils/tokenPrice";
+import { Button } from 'antd';
 
 import "antd/dist/antd.css";
 import { Input, Space } from "antd";
@@ -97,28 +97,10 @@ export default function Home() {
             <code>{data.symbol} 🔥 stats</code>
 
             <br />
-            {tokenName == "DogeMoon" ? (
-              <code>Price ${Number(tokenPrice * bnbPrice).toFixed(20)} $</code>
-            ) : (
-              ""
-            )}
+    <Button type="primary" href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100">Honeyswap</Button>
+    <Button type="default" href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc">Charts</Button>
           </p>
-          {/* <Search
-            placeholder="input contract address"
-            suffix={`BNB ${bnbPrice} $`}
-            style={{ width: 560 }}
-            onChange={(e) => {
-              setTokenContract(e.target.value);
-              // e.preventDefault()
-              // console.log(`e.target.value.length`, e.target.value.length)
-              // console.log(`tokenContract`, tokenContract)
-              // if(e.target.value.length == 42) {
-              //   setTokenContract(e.target.value)
-              //   console.log(`tokenContract`, tokenContract)
-              //   fetchData();
-            }}
-            onSearch={onSearch}
-          /> */}
+
           <div className="site-card-wrapper">
             <Row gutter={16}>
               <Col>
