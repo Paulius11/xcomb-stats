@@ -97,8 +97,9 @@ export default function Home() {
             <code>{data.symbol} 🔥 stats</code>
 
             <br />
-    <Button type="default" href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100">Honeyswap</Button>
-    <Button type="default" href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc">Chart</Button>
+        <Button type="default" href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100">Honeyswap</Button>
+        <Button type="default" href="https://1hive.io/#/farm">Farms</Button>
+        <Button type="default" href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc">Chart</Button>
           </p>
 
           <div className="site-card-wrapper">
