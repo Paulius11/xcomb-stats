@@ -1,57 +1,42 @@
 import Web3 from "web3";
-import ROUTER_ABI from "./abi/api-bscRouter.js";
-import PAIR_ABI from "./abi/api-bscPair.js";
+import PAIR_ABI from "./abi/pair-abi.js";
+import ERC20ABI from "./abi/api-erc20.js";
 
 
-const ROUTER_ADDRESS = "0xbcfccbde45ce874adcb698cc183debcf17952812" // bsc router address
-
-const TOKEN_ADDRESS = "0x3A2646FeD69112698D3e8A9aB43AE23974E01a26" // example for local runs
-const WBNB_ADDRESS = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c" 
-const NETWORK_BSC = "https://bsc-dataseed1.binance.org:443"
+const NETWORK_URL = "https://rpc.xdaichain.com"
 
 
-
-
-// Get token pair address
-const tokenData = async (token_address) => {
+const tokenData = async (token = "") => {
   const web3 = new Web3(
-    new Web3.providers.HttpProvider(NETWORK_BSC)
+    new Web3.providers.HttpProvider(NETWORK_URL)
   );
-    var customToken = new web3.eth.Contract(
-      ROUTER_ABI,
-      ROUTER_ADDRESS
-    );
-
-
-  const pair = await customToken.methods.getPair(token_address, WBNB_ADDRESS).call();
-  return pair
-}
-
-// Get address reserve data
-const tokenPairData = async (pairAddress) => {
-  const web3 = new Web3(
-    new Web3.providers.HttpProvider(NETWORK_BSC)
-  );
+  if (!token) {
     var customToken = new web3.eth.Contract(
       PAIR_ABI,
-      pairAddress
-    );
+      "0x9e8E5e4a0900fE4634c02AAf0f130cfB93c53fBc"  // xdai-xcomb pair
+
+    ); 
+  } else {
+    var customToken = new web3.eth.Contract(ERC20ABI, token); 
+  }
 
 
-  const reserves = await customToken.methods.getReserves().call();
-  return reserves
+  // run only standalone
+  const reserves = await customToken.methods.getReserves ().call();
+  console.log(reserves);
+  return  reserves;
+};
+
+// Get token price in xdai 0.8508342338796561 Xdai
+const tokenPrice = async () => {
+  const {_reserve0, _reserve1} = await tokenData();
+    
+  var rate = _reserve1/_reserve0
+  console.log(`Rate: ${rate} Xdai`)
+  return rate
 }
 
-// wrapper function
-// get address from factory and quiry reserve
-const getReserveData = async (tokenAddress) => {
-  const pairAddress = await tokenData(tokenAddress);
-  console.log(pairAddress);
-  const reserve = await tokenPairData(pairAddress);
-  return reserve
-}
+// Run standalone
+// const price = await tokenPrice();
 
-// const pairData = await getReserveData(TOKEN_ADDRESS);
-// console.log(`pairAddress`, pairData)
-
-export default getReserveData;
+export default tokenPrice;

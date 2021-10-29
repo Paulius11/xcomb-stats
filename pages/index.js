@@ -2,23 +2,14 @@ import Head from "next/head";
 import tokenData from "../utils/tokenData.js";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Button } from 'antd';
 
 import "antd/dist/antd.css";
-import { Input, Space } from "antd";
-import { Progress } from "antd";
+import { Progress, Input, Button, Layout, Menu, Card, Col, Row } from "antd";
+import { PageHeader, Tag,  Statistic, Descriptions  } from 'antd';
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 
-import { Layout, Menu, Breadcrumb } from "antd";
-import { Card, Col, Row } from "antd";
-const { Header, Content, Footer } = Layout;
+import tokenPrice from "../utils/tokenPrice";
 
-import {
-  ToolOutlined,
-  AppstoreOutlined,
-  AreaChartOutlined,
-} from "@ant-design/icons";
-
-const numberToText = require("number-to-text");
 require("number-to-text/converters/en-us"); // load converter
 
 export default function Home() {
@@ -27,19 +18,15 @@ export default function Home() {
   const [deadTokens, setDeadTokens] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [data, setData] = useState("");
-  const [tokenPrice, setTokenPrice] = useState();
+  const [priceData, setPriceData] = useState();
 
-  const [bnbPrice, setBnbPrice] = useState("");
-  const [seachHistory, setSearchHistory] = useState([{ name: "", url: "" }]);
 
   // set initial coin to be displayed
   const [tokenContract, setTokenContract] = useState(
     "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
   );
 
-  const numberToWord = (number) => {
-    return numberToText.convertToText(Math.trunc(number)).split(",")[0];
-  };
+
 
   /**
    *  fetch price and token data
@@ -48,6 +35,12 @@ export default function Home() {
     try {
       console.log(`tokenContract`, tokenContract);
       const res = await tokenData(tokenContract);
+      
+      // Token price data
+      const price = await tokenPrice();
+      console.log(`tokenPrice`, price);
+      setPriceData(price)
+
       console.log(`res`, res);
       setData(res);
       setTotalSupply(res.totalSupply);
@@ -73,14 +66,28 @@ export default function Home() {
   const { Search } = Input;
   const { SubMenu } = Menu;
 
+
   return (
     <Layout className="layout">
+    <PageHeader
+      title="XCOMB"
+      tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
+      subTitle="Current price"
+      extra={[
+        <Button type="default" href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100">Honeyswap</Button>,
+        <Button type="default" href="https://1hive.io/#/farm">Farms</Button>,
+        <Button type="default" href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc">Chart</Button>,
+      ]}
+    >
+    </PageHeader>
+
       <div className="container">
         <Head>
-          <title>Comb Burn Stats</title>
+          <title>Comb Burn Stats </title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
+
           <h1 className="title">
             Welcome to
             <a
@@ -94,12 +101,11 @@ export default function Home() {
           <hr />
 
           <p className="description">
+  
+          <br/>
+            <br/>
             <code>{data.symbol} 🔥 stats</code>
-
-            <br />
-        <Button type="default" href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100">Honeyswap</Button>
-        <Button type="default" href="https://1hive.io/#/farm">Farms</Button>
-        <Button type="default" href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc">Chart</Button>
+           <br />
           </p>
 
           <div className="site-card-wrapper">
