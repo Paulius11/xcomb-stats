@@ -122,7 +122,7 @@ export default function Home() {
                 <Card title="Burned: " bordered={false}>
                   
                   <a
-                    href={`https://blockscout.com/xdai/mainnet/address/0x000000000000000000000000000000000000dEaD/tokens/0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7/token-transfers`}
+                    href={`https://xcomb.vercel.app/logo.webp`}
                   >
                     {deadTokens.toLocaleString("en")}
                   </a>
@@ -135,7 +135,6 @@ export default function Home() {
 
         <footer>
         <Tag color="success">Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F</Tag>
-        {/* <Alert message="Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F " type="info" /> */}
           
           </footer>
 
