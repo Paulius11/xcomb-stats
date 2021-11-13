@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import "antd/dist/antd.css";
 import { Progress, Input, Button, Layout, Menu, Card, Col, Row } from "antd";
 import { PageHeader, Tag,  Statistic, Descriptions  } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { Alert } from 'antd';
 
 import tokenPrice from "../utils/tokenPrice";
 
@@ -134,7 +134,9 @@ export default function Home() {
         </main>
 
         <footer>
-          Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F 
+        <Tag color="success">Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F</Tag>
+        {/* <Alert message="Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F " type="info" /> */}
+          
           </footer>
 
         <style jsx>{`
