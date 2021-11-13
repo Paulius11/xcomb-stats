@@ -71,6 +71,7 @@ export default function Home() {
     <Layout className="layout">
     <PageHeader
       title="XCOMB"
+      avatar={{ src: 'https://assets.coingecko.com/coins/images/16012/small/logo.png?1622603137' }}
       tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
       subTitle="Current price"
       extra={[
@@ -132,7 +133,9 @@ export default function Home() {
           </div>
         </main>
 
-        <footer>Powered by Moon </footer>
+        <footer>
+          Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F 
+          </footer>
 
         <style jsx>{`
           .container {
