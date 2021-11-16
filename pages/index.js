@@ -5,10 +5,11 @@ import { useRouter } from "next/router";
 
 import "antd/dist/antd.css";
 import { Progress, Input, Button, Layout, Menu, Card, Col, Row } from "antd";
-import { PageHeader, Tag,  Statistic, Descriptions  } from 'antd';
-import { Alert } from 'antd';
+import { PageHeader, Tag, Alert } from 'antd';
+
 
 import tokenPrice from "../utils/tokenPrice";
+import lastWeedBurned from "../utils/lastWeekBurn";
 
 require("number-to-text/converters/en-us"); // load converter
 
@@ -20,6 +21,8 @@ export default function Home() {
   const [data, setData] = useState("");
   const [priceData, setPriceData] = useState();
 
+  const [lastWB, setLastWB] = useState();
+
 
   // set initial coin to be displayed
   const [tokenContract, setTokenContract] = useState(
@@ -27,26 +30,24 @@ export default function Home() {
   );
 
 
-
   /**
    *  fetch price and token data
    */
   const fetchData = async () => {
     try {
-      console.log(`tokenContract`, tokenContract);
-      const res = await tokenData(tokenContract);
+      const todenData = await tokenData(tokenContract);
+      const lastWB = await lastWeedBurned();
+      console.log(lastWB.burned.$numberDouble)
+      setLastWB(parseFloat(lastWB.burned.$numberDouble))
       
       // Token price data
       const price = await tokenPrice();
-      console.log(`tokenPrice`, price);
       setPriceData(price)
-
-      console.log(`res`, res);
-      setData(res);
-      setTotalSupply(res.totalSupply);
-      setTotalFees(res.totalFees);
-      setDeadTokens(res.balanceOfDeadAddress);
-      setTokenName(res.name);
+      setData(todenData);
+      setTotalSupply(todenData.totalSupply);
+      setTotalFees(todenData.totalFees);
+      setDeadTokens(todenData.balanceOfDeadAddress);
+      setTokenName(todenData.name);
     } catch (error) {
       console.error(error.message);
     }
@@ -119,15 +120,25 @@ export default function Home() {
                 </Card>
               </Col>
               <Col>
-                <Card title="Burned: " bordered={false}>
-                  
+              
+                <Card title="Total Burned" bordered={false}>
+
                   <a
-                    href={`https://xcomb.vercel.app/logo.webp`}
+                    href={`https://bscscan.com/token/${tokenContract}?a=0x000000000000000000000000000000000000dead`}
                   >
-                    {deadTokens.toLocaleString("en")}
+                    {deadTokens.toLocaleString("en")}  
+                    <br/>
+                   
                   </a>
                 </Card>
               </Col>
+
+
+             <Col>
+                <Card title="Last Week" bordered={false}>
+                  {lastWB && lastWB.toLocaleString("en")}
+                </Card>
+            </Col>
             </Row>
             <Progress percent={((deadTokens / totalSupply) * 100).toFixed(2)} />
           </div>
