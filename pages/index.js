@@ -124,7 +124,7 @@ export default function Home() {
                 <Card title="Total Burned" bordered={false}>
 
                   <a
-                    href={`https://bscscan.com/token/${tokenContract}?a=0x000000000000000000000000000000000000dead`}
+                    href={`https://blockscout.com/xdai/mainnet/address/0x000000000000000000000000000000000000dEaD/token-transfers`}
                   >
                     {deadTokens.toLocaleString("en")}  
                     <br/>
