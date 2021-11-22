@@ -1,8 +1,8 @@
 import Head from "next/head";
 import tokenData from "../utils/tokenData.js";
 import React, { useState, useEffect } from "react";
+import Link from 'next/link'
 
-import "antd/dist/antd.css";
 import { Progress, Button, Layout, Card, Col, Row } from "antd";
 import { PageHeader, Tag } from "antd";
 
@@ -63,6 +63,12 @@ export default function Home() {
         tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
         subTitle="Current price"
         extra={[
+          <Link href="/burned">
+          <Button ghost type="dashed" danger >
+           Weekly 🔥 Stats
+          </Button>
+          </Link>
+          ,
           <Button ghost type="primary" href="https://forum.1hive.org/">
             Forum
           </Button>,
