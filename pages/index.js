@@ -1,12 +1,10 @@
 import Head from "next/head";
 import tokenData from "../utils/tokenData.js";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 
 import "antd/dist/antd.css";
-import { Progress, Input, Button, Layout, Menu, Card, Col, Row } from "antd";
-import { PageHeader, Tag, Alert } from 'antd';
-
+import { Progress, Button, Layout, Card, Col, Row } from "antd";
+import { PageHeader, Tag } from "antd";
 
 import tokenPrice from "../utils/tokenPrice";
 import lastWeedBurned from "../utils/lastWeekBurn";
@@ -23,12 +21,10 @@ export default function Home() {
 
   const [lastWB, setLastWB] = useState();
 
-
   // set initial coin to be displayed
   const [tokenContract, setTokenContract] = useState(
     "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
   );
-
 
   /**
    *  fetch price and token data
@@ -37,12 +33,12 @@ export default function Home() {
     try {
       const todenData = await tokenData(tokenContract);
       const lastWB = await lastWeedBurned();
-      console.log(lastWB.burned.$numberDouble)
-      setLastWB(parseFloat(lastWB.burned.$numberDouble))
-      
+      console.log(lastWB.burned.$numberDouble);
+      setLastWB(parseFloat(lastWB.burned.$numberDouble));
+
       // Token price data
       const price = await tokenPrice();
-      setPriceData(price)
+      setPriceData(price);
       setData(todenData);
       setTotalSupply(todenData.totalSupply);
       setTotalFees(todenData.totalFees);
@@ -53,36 +49,40 @@ export default function Home() {
     }
   };
 
-  // when search button is clicked
-  const onSearch = () => {
-    fetchData();
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
 
-  const router = useRouter();
-  const { id } = router.query;
-  const { Search } = Input;
-  const { SubMenu } = Menu;
-
-
   return (
     <Layout className="layout">
-    <PageHeader
-      title="XCOMB"
-      avatar={{ src: 'https://assets.coingecko.com/coins/images/16012/small/logo.png?1622603137' }}
-      tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
-      subTitle="Current price"
-      extra={[
-        <Button ghost type="primary" href="https://forum.1hive.org/">Forum</Button>,
-        <Button type="default" href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100">Honeyswap</Button>,
-        <Button type="default" href="https://1hive.io/#/farm">Farms</Button>,
-        <Button type="default" href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc">Chart</Button>,
-      ]}
-    >
-    </PageHeader>
+      <PageHeader
+        title="XCOMB"
+        avatar={{
+          src: "https://assets.coingecko.com/coins/images/16012/small/logo.png?1622603137",
+        }}
+        tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
+        subTitle="Current price"
+        extra={[
+          <Button ghost type="primary" href="https://forum.1hive.org/">
+            Forum
+          </Button>,
+          <Button
+            type="default"
+            href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100"
+          >
+            Honeyswap
+          </Button>,
+          <Button type="default" href="https://1hive.io/#/farm">
+            Farms
+          </Button>,
+          <Button
+            type="default"
+            href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc"
+          >
+            Chart
+          </Button>,
+        ]}
+      ></PageHeader>
 
       <div className="container">
         <Head>
@@ -90,7 +90,6 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-
           <h1 className="title">
             Welcome to
             <a
@@ -104,11 +103,10 @@ export default function Home() {
           <hr />
 
           <p className="description">
-  
-          <br/>
-            <br/>
+            <br />
+            <br />
             <code>{data.symbol} 🔥 stats</code>
-           <br />
+            <br />
           </p>
 
           <div className="site-card-wrapper">
@@ -121,34 +119,31 @@ export default function Home() {
                 </Card>
               </Col>
               <Col>
-              
                 <Card title="Total Burned" bordered={false}>
-
                   <a
                     href={`https://blockscout.com/xdai/mainnet/address/0x000000000000000000000000000000000000dEaD/token-transfers`}
                   >
-                    {deadTokens.toLocaleString("en")}  
-                    <br/>
-                   
+                    {deadTokens.toLocaleString("en")}
+                    <br />
                   </a>
                 </Card>
               </Col>
 
-
-             <Col>
+              <Col>
                 <Card title="Last Week" bordered={false}>
                   {lastWB && lastWB.toLocaleString("en")}
                 </Card>
-            </Col>
+              </Col>
             </Row>
             <Progress percent={((deadTokens / totalSupply) * 100).toFixed(2)} />
           </div>
         </main>
 
         <footer>
-        <Tag color="success">Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F</Tag>
-          
-          </footer>
+          <Tag color="success">
+            Support: 0xC61B9aD1E498D88F07eA0973C0fea84c90fd6f8F
+          </Tag>
+        </footer>
 
         <style jsx>{`
           .container {
@@ -281,8 +276,6 @@ export default function Home() {
             }
           }
         `}</style>
-
-
       </div>
     </Layout>
   );
