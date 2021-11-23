@@ -4,7 +4,6 @@ import ERC20ABI from "./abi/api-erc20.js";
 
 const tokenData = async (token = "") => {
   const web3 = new Web3(
-    // new Web3.providers.HttpProvider("https://bsc-dataseed1.binance.org:443")
     new Web3.providers.HttpProvider("https://rpc.xdaichain.com")
   );
   if (!token) {
@@ -15,7 +14,7 @@ const tokenData = async (token = "") => {
   } else {
     var customToken = new web3.eth.Contract(ERC20ABI, token); 
   }
-  console.log(`token`, token);
+  console.log(`tokenData.js token`, token);
 
   // run only standalone
   const name = await customToken.methods.name().call();

@@ -11,12 +11,12 @@ import lastWeedBurned from "../utils/lastWeekBurn";
 
 require("number-to-text/converters/en-us"); // load converter
 
-export default function Home() {
-  const [totalSupply, setTotalSupply] = useState("");
-  const [totalFees, setTotalFees] = useState("");
-  const [deadTokens, setDeadTokens] = useState("");
-  const [tokenName, setTokenName] = useState("");
-  const [data, setData] = useState("");
+export default function Home({data, totalSupply, totalFees, deadTokens, tokenName}) {
+  // const [totalSupply, setTotalSupply] = useState("");
+  // const [totalFees, setTotalFees] = useState("");
+  // const [deadTokens, setDeadTokens] = useState("");
+  // const [tokenName, setTokenName] = useState("");
+  // const [data, setData] = useState("");
   const [priceData, setPriceData] = useState();
 
   const [lastWB, setLastWB] = useState();
@@ -31,7 +31,7 @@ export default function Home() {
    */
   const fetchData = async () => {
     try {
-      const todenData = await tokenData(tokenContract);
+      // const todenData = await tokenData(tokenContract);
       const lastWB = await lastWeedBurned();
       console.log(lastWB.burned.$numberDouble);
       setLastWB(parseFloat(lastWB.burned.$numberDouble));
@@ -39,11 +39,11 @@ export default function Home() {
       // Token price data
       const price = await tokenPrice();
       setPriceData(price);
-      setData(todenData);
-      setTotalSupply(todenData.totalSupply);
-      setTotalFees(todenData.totalFees);
-      setDeadTokens(todenData.balanceOfDeadAddress);
-      setTokenName(todenData.name);
+      // setData(todenData);
+      // setTotalSupply(todenData.totalSupply);
+      // setTotalFees(todenData.totalFees);
+      // setDeadTokens(todenData.balanceOfDeadAddress);
+      // setTokenName(todenData.name);
     } catch (error) {
       console.error(error.message);
     }
@@ -286,3 +286,15 @@ export default function Home() {
     </Layout>
   );
 }
+
+Home.getInitialProps = async (ctx) => {
+  const todenData = await tokenData("0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7");
+
+  return { 
+    data: todenData,
+    totalSupply: todenData.totalSupply,
+    totalFees: todenData.totalFees,
+    deadTokens: todenData.balanceOfDeadAddress,
+    tokenName: todenData.name,
+  };
+};
