@@ -86,7 +86,8 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
           </Button>,
           <Button
             type="default"
-            href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc"
+            // href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc"
+            href="https://info.honeyswap.org/#/pair/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc"
           >
             Chart
           </Button>,
