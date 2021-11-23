@@ -36,6 +36,7 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
       console.log(lastWB.burned.$numberDouble);
       setLastWB(parseFloat(lastWB.burned.$numberDouble));
 
+      const thisWeekBurned = (deadTokens - lastWB).toFixed()
       // Token price data
       const price = await tokenPrice();
       setPriceData(price);
@@ -63,11 +64,13 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
         tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
         subTitle="Current price"
         extra={[
+          <>
           <Link href="/burned">
-          <Button ghost type="dashed" danger >
-           Weekly 🔥 Stats
-          </Button>
+            <Button ghost type="dashed" danger >
+            Weekly 🔥 Stats
+            </Button>
           </Link>
+          </>
           ,
           <Button ghost type="primary" href="https://forum.1hive.org/">
             Forum
@@ -111,7 +114,8 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
           <p className="description">
             <br />
             <br />
-            <code>{data.symbol} 🔥 stats</code>
+            <code>{data.symbol} 🔥 stats</code><br/>
+            <Tag  color="#cd201f"> This week: {(deadTokens - lastWB).toFixed()} XCOMB 🔥 ${ ((deadTokens - lastWB)*Number(priceData)).toFixed() } </Tag>
             <br />
           </p>
 
@@ -136,7 +140,7 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
               </Col>
 
               <Col>
-                <Card title="Last Week" bordered={false}>
+                <Card title="Total Last Week" bordered={false}>
                   {lastWB && lastWB.toLocaleString("en")}
                 </Card>
               </Col>
