@@ -1,7 +1,7 @@
 import Head from "next/head";
 import tokenData from "../utils/tokenData.js";
 import React, { useState, useEffect } from "react";
-import Link from 'next/link'
+import Link from "next/link";
 
 import { Progress, Button, Layout, Card, Col, Row } from "antd";
 import { PageHeader, Tag } from "antd";
@@ -11,7 +11,13 @@ import lastWeedBurned from "../utils/lastWeekBurn";
 
 require("number-to-text/converters/en-us"); // load converter
 
-export default function Home({data, totalSupply, totalFees, deadTokens, tokenName}) {
+export default function Home({
+  data,
+  totalSupply,
+  totalFees,
+  deadTokens,
+  tokenName,
+}) {
   // const [totalSupply, setTotalSupply] = useState("");
   // const [totalFees, setTotalFees] = useState("");
   // const [deadTokens, setDeadTokens] = useState("");
@@ -36,7 +42,7 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
       console.log(lastWB.burned.$numberDouble);
       setLastWB(parseFloat(lastWB.burned.$numberDouble));
 
-      const thisWeekBurned = (deadTokens - lastWB).toFixed()
+      const thisWeekBurned = (deadTokens - lastWB).toFixed();
       // Token price data
       const price = await tokenPrice();
       setPriceData(price);
@@ -64,15 +70,12 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
         tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
         subTitle="Current price"
         extra={[
-          <>
-          <Link href="/burned">
-            <Button ghost type="dashed" danger >
-            Weekly 🔥 Stats
+          <Link id={12} href="/burned">
+            <Button ghost type="dashed" danger>
+              Weekly 🔥 Stats
             </Button>
-          </Link>
-          </>
-          ,
-          <Button ghost type="primary" href="https://forum.1hive.org/">
+          </Link>,
+          <Button id={13} ghost type="primary" href="https://forum.1hive.org/">
             Forum
           </Button>,
           <Button
@@ -81,7 +84,7 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
           >
             Honeyswap
           </Button>,
-          <Button type="default" href="https://1hive.io/#/farm">
+          <Button id={14} type="default" href="https://1hive.io/#/farm">
             Farms
           </Button>,
           <Button
@@ -115,8 +118,13 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
           <p className="description">
             <br />
             <br />
-            <code>{data.symbol} 🔥 stats</code><br/>
-            <Tag  color="#cd201f"> This week: {(deadTokens - lastWB).toFixed()} XCOMB 🔥 ${ ((deadTokens - lastWB)*Number(priceData)).toFixed() } </Tag>
+            <code>{data.symbol} 🔥 stats</code>
+            <br />
+            <Tag color="#cd201f">
+              {" "}
+              This week: {(deadTokens - lastWB).toFixed()} XCOMB 🔥 $
+              {((deadTokens - lastWB) * Number(priceData)).toFixed()}{" "}
+            </Tag>
             <br />
           </p>
 
@@ -293,13 +301,16 @@ export default function Home({data, totalSupply, totalFees, deadTokens, tokenNam
 }
 
 Home.getInitialProps = async (ctx) => {
-  const todenData = await tokenData("0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7");
+  const todenData = await tokenData(
+    "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
+  );
 
-  return { 
+  return {
     data: todenData,
     totalSupply: todenData.totalSupply,
     totalFees: todenData.totalFees,
     deadTokens: todenData.balanceOfDeadAddress,
     tokenName: todenData.name,
+    unstable_revalidate: 21_600, // refresh after: 6 hours
   };
 };
