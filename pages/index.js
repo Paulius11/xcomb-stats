@@ -333,7 +333,7 @@ export default function Home({
   );
 }
 
-Home.getInitialProps = async (ctx) => {
+Home.getStaticProps = async (ctx) => {
   const todenData = await tokenData(
     "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
   );
@@ -344,6 +344,6 @@ Home.getInitialProps = async (ctx) => {
     totalFees: todenData.totalFees,
     deadTokens: todenData.balanceOfDeadAddress,
     tokenName: todenData.name,
-    unstable_revalidate: 21_600, // refresh after 6 hours
+    revalidate : 5, // refresh after 6 hours
   };
 };
