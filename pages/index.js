@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { Progress, Button, Layout, Card, Col, Row } from "antd";
+import {Menu } from "antd";
 import { PageHeader, Tag } from "antd";
 
 import tokenPrice from "../utils/tokenPrice";
@@ -60,8 +61,15 @@ export default function Home({
     fetchData();
   }, []);
 
+  
+  const { SubMenu } = Menu;
+
+
   return (
     <Layout className="layout">
+
+
+    {/* Start page Header */}
       <PageHeader
         title="XCOMB"
         avatar={{
@@ -70,13 +78,8 @@ export default function Home({
         tags={<Tag color="blue">{Number(priceData).toFixed(2)} xDAi </Tag>}
         subTitle="Current price"
         extra={[
-          <Link id={12} href="/burned">
-            <Button ghost type="dashed" danger>
-              Weekly 🔥 Stats
-            </Button>
-          </Link>,
           <Button id={13} ghost type="primary" href="https://forum.1hive.org/">
-            Forum
+              Forum
           </Button>,
           <Button
             type="default"
@@ -96,6 +99,35 @@ export default function Home({
           </Button>,
         ]}
       ></PageHeader>
+
+    {/* End page Header */}
+      {/* Start page menu */}
+      <Menu  mode="horizontal">
+        <Menu.Item key="mail" >
+        <Link  href="/burned">
+            <Button ghost type="dashed" danger>
+              Weekly 🔥 Stats
+            </Button>
+          </Link>
+        </Menu.Item>
+
+        {/* <SubMenu key="SubMenu" title="Navigation Three - Submenu">
+          <Menu.ItemGroup title="Item 1">
+            <Menu.Item key="setting:1">Option 1</Menu.Item>
+            <Menu.Item key="setting:2">Option 2</Menu.Item>
+          </Menu.ItemGroup>
+          <Menu.ItemGroup title="Item 2">
+            <Menu.Item key="setting:3">Option 3</Menu.Item>
+            <Menu.Item key="setting:4">Option 4</Menu.Item>
+          </Menu.ItemGroup>
+        </SubMenu> */}
+        {/* <Menu.Item key="alipay">
+          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+            Navigation Four - Link
+          </a>
+        </Menu.Item> */}
+      </Menu>
+      {/* End page menu */}
 
       <div className="container">
         <Head>
@@ -153,8 +185,9 @@ export default function Home({
                   {lastWB && lastWB.toLocaleString("en")}
                 </Card>
               </Col>
+              <Progress percent={((deadTokens / totalSupply) * 100).toFixed(2)} />
             </Row>
-            <Progress percent={((deadTokens / totalSupply) * 100).toFixed(2)} />
+
           </div>
         </main>
 
