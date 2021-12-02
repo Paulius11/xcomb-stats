@@ -1,21 +1,27 @@
 import React from "react";
-import { Card } from "antd";
-import Link from 'next/link'
+import { Card, Layout, Button } from "antd";
+import Link from "next/link";
 
 const URL = `https://eu-central-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/application-1-jvnaq/service/xdai_burn_query/incoming_webhook/get_all_burns`;
 function Home({ data }) {
+  const { Content } = Layout;
+
   return (
-    <>
-      {data.map((element) => (
-        <Card id={element._id.$oid}>
-          <li>Burned: {element.burned.$numberDouble}</li>
-          <li>Week: {element.weekday.$numberInt}</li>
-          {/* <li>Created: {JSON.stringify(element.created.$date)}</li> */}
-          <li>Date: {element.created.$date.$numberLong}</li>
-        </Card>
-      ))}
-      <Link href="/">Back</Link>
-    </>
+    <Layout className="layout">
+      <Content style={{ padding: "0 50px" }}>
+        {data.map((element) => (
+          <Card id={element._id.$oid}>
+            <li>Burned: {element.burned.$numberDouble}</li>
+            <li>Week: {element.weekday.$numberInt}</li>
+            {/* <li>Created: {JSON.stringify(element.created.$date)}</li> */}
+            <li>Date: {element.created.$date.$numberLong}</li>
+          </Card>
+        ))}
+        <Button type="dashed" >
+          <Link href="/">Back</Link>
+        </Button>
+      </Content>
+    </Layout>
   );
 }
 

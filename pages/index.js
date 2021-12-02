@@ -333,7 +333,7 @@ export default function Home({
   );
 }
 
-Home.getStaticProps = async (ctx) => {
+Home.getInitialProps = async (ctx) => {
   const todenData = await tokenData(
     "0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7"
   );
