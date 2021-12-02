@@ -11,3 +11,6 @@ body {
   box-sizing: border-box;
 }
 
+.ant-col {
+  margin: 2 em;
+}

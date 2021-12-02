@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { Progress, Button, Layout, Card, Col, Row } from "antd";
-import {Menu } from "antd";
+import { Menu } from "antd";
 import { PageHeader, Tag } from "antd";
 
 import tokenPrice from "../utils/tokenPrice";
@@ -61,15 +61,11 @@ export default function Home({
     fetchData();
   }, []);
 
-  
   const { SubMenu } = Menu;
-
 
   return (
     <Layout className="layout">
-
-
-    {/* Start page Header */}
+      {/* Start page Header */}
       <PageHeader
         title="XCOMB"
         avatar={{
@@ -79,7 +75,7 @@ export default function Home({
         subTitle="Current price"
         extra={[
           <Button id={13} ghost type="primary" href="https://forum.1hive.org/">
-              Forum
+            Forum
           </Button>,
           <Button
             type="default"
@@ -100,11 +96,11 @@ export default function Home({
         ]}
       ></PageHeader>
 
-    {/* End page Header */}
+      {/* End page Header */}
       {/* Start page menu */}
-      <Menu  mode="horizontal">
-        <Menu.Item key="mail" >
-        <Link  href="/burned">
+      <Menu mode="horizontal">
+        <Menu.Item key="mail">
+          <Link href="/burned">
             <Button ghost type="dashed" danger>
               Weekly 🔥 Stats
             </Button>
@@ -161,15 +157,15 @@ export default function Home({
           </p>
 
           <div className="site-card-wrapper">
-            <Row gutter={16}>
-              <Col>
+          <Row >
+              <Col >
                 <Card title="Total Supply" bordered={false}>
                   {(
                     typeof totalSupply !== "undefined" && totalSupply
                   ).toLocaleString("en")}
                 </Card>
               </Col>
-              <Col>
+              <Col >
                 <Card title="Total Burned" bordered={false}>
                   <a
                     href={`https://blockscout.com/xdai/mainnet/address/0x000000000000000000000000000000000000dEaD/token-transfers`}
@@ -180,14 +176,15 @@ export default function Home({
                 </Card>
               </Col>
 
-              <Col>
+              <Col >
                 <Card title="Total Last Week" bordered={false}>
                   {lastWB && lastWB.toLocaleString("en")}
                 </Card>
               </Col>
-              <Progress percent={((deadTokens / totalSupply) * 100).toFixed(2)} />
+              <Progress
+                percent={((deadTokens / totalSupply) * 100).toFixed(2)}
+              />
             </Row>
-
           </div>
         </main>
 
@@ -287,36 +284,6 @@ export default function Home({
             margin-top: 3rem;
           }
 
-          .card {
-            margin: 1rem;
-            flex-basis: 45%;
-            padding: 1.5rem;
-            text-align: left;
-            color: inherit;
-            text-decoration: none;
-            border: 1px solid #eaeaea;
-            border-radius: 10px;
-            transition: color 0.15s ease, border-color 0.15s ease;
-          }
-
-          .card:hover,
-          .card:focus,
-          .card:active {
-            color: #0070f3;
-            border-color: #0070f3;
-          }
-
-          .card h3 {
-            margin: 0 0 1rem 0;
-            font-size: 1.5rem;
-          }
-
-          .card p {
-            margin: 0;
-            font-size: 1.25rem;
-            line-height: 1.5;
-          }
-
           .logo {
             height: 1em;
           }
@@ -344,6 +311,6 @@ Home.getInitialProps = async (ctx) => {
     totalFees: todenData.totalFees,
     deadTokens: todenData.balanceOfDeadAddress,
     tokenName: todenData.name,
-    revalidate : 5, // refresh after 6 hours
+    revalidate: 5, // refresh after 6 hours
   };
 };
