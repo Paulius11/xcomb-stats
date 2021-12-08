@@ -8,16 +8,16 @@ function Home({ data }) {
 
   return (
     <Layout className="layout">
-      <Content style={{ padding: "0 50px" }}>
+      <Content style={{ padding: "1.5em" }}>
         {data.map((element) => (
-          <Card id={element._id.$oid}>
+          <Card id={element._id.$oid} style={{ margin: "0.1em" }}  >
             <li>Burned: {element.burned.$numberDouble}</li>
             <li>Week: {element.weekday.$numberInt}</li>
             {/* <li>Created: {JSON.stringify(element.created.$date)}</li> */}
             <li>Date: {element.created.$date.$numberLong}</li>
           </Card>
         ))}
-        <Button type="dashed" >
+        <Button type="dashed"  style={{ margin: "0.3em" }}>
           <Link href="/">Back</Link>
         </Button>
       </Content>

@@ -159,7 +159,7 @@ export default function Home({
           <div className="site-card-wrapper">
           <Row >
               <Col >
-                <Card title="Total Supply" bordered={false}>
+                <Card className="card" title="Total Supply" bordered={false}>
                   {(
                     typeof totalSupply !== "undefined" && totalSupply
                   ).toLocaleString("en")}
