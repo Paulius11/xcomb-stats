@@ -314,6 +314,6 @@ Home.getInitialProps = async (ctx) => {
     totalFees: todenData.totalFees,
     deadTokens: todenData.balanceOfDeadAddress,
     tokenName: todenData.name,
-    revalidate: 5, // refresh after 6 hours
+    revalidate: 21600, // refresh after 6 hours
   };
 };
