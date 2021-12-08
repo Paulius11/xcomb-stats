@@ -78,15 +78,17 @@ export default function Home({
             Forum
           </Button>,
           <Button
+            id={14}
             type="default"
             href="https://app.honeyswap.org/#/swap?inputCurrency=0x38fb649ad3d6ba1113be5f57b927053e97fc5bf7&outputCurrency=0xe91d153e0b41518a2ce8dd3d7944fa863463a97d&chainId=100"
           >
             Honeyswap
           </Button>,
-          <Button id={14} type="default" href="https://1hive.io/#/farm">
+          <Button id={15} type="default" href="https://1hive.io/#/farm">
             Farms
           </Button>,
           <Button
+            id={16}
             type="default"
             // href="https://app.moontools.io/pairs/honeyswap/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc"
             href="https://info.honeyswap.org/#/pair/0x9e8e5e4a0900fe4634c02aaf0f130cfb93c53fbc"
@@ -157,15 +159,15 @@ export default function Home({
           </p>
 
           <div className="site-card-wrapper">
-          <Row >
-              <Col >
+            <Row>
+              <Col className="card-style" >
                 <Card className="card" title="Total Supply" bordered={false}>
                   {(
                     typeof totalSupply !== "undefined" && totalSupply
                   ).toLocaleString("en")}
                 </Card>
               </Col>
-              <Col >
+              <Col className="card-style">
                 <Card title="Total Burned" bordered={false}>
                   <a
                     href={`https://blockscout.com/xdai/mainnet/address/0x000000000000000000000000000000000000dEaD/token-transfers`}
@@ -176,7 +178,7 @@ export default function Home({
                 </Card>
               </Col>
 
-              <Col >
+              <Col className="card-style">
                 <Card title="Total Last Week" bordered={false}>
                   {lastWB && lastWB.toLocaleString("en")}
                 </Card>
@@ -287,6 +289,7 @@ export default function Home({
           .logo {
             height: 1em;
           }
+          
 
           @media (max-width: 600px) {
             .grid {

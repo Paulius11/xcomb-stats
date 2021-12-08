@@ -7,6 +7,10 @@ body {
     sans-serif;
 }
 
+.card-style {
+  padding: 1em;
+}
+
 * {
   box-sizing: border-box;
 }
