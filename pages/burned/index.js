@@ -9,11 +9,13 @@ function Home({ data }) {
   return (
     <Layout className="layout">
       <Content style={{ padding: "1.5em" }}>
-        {data.map((element) => (
+        {data.map((element, key) => (
           <Card id={element._id.$oid} style={{ margin: "0.1em" }}  >
-            <li>Burned: {element.burned.$numberDouble}</li>
-            <li>Week: {element.weekday.$numberInt}</li>
-            {/* <li>Created: {JSON.stringify(element.created.$date)}</li> */}
+           <li>{console.log(key)}</li>
+            <li>Burned: {element.burned.$numberDouble}</li> 
+            <li>Week: {element.weekday.$numberInt}</li>           
+            {/* Growth */}
+            <li className="growth">Growth: +{key != 0 && data[key].burned.$numberDouble - data[key-1].burned.$numberDouble }</li>
             <li>Date: {element.created.$date.$numberLong}</li>
           </Card>
         ))}

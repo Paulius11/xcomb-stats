@@ -11,6 +11,10 @@ body {
   padding: 1em;
 }
 
+.growth {
+  color: green;
+}
+
 * {
   box-sizing: border-box;
 }
